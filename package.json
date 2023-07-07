@@ -1,6 +1,6 @@
 {
-  "name": "veramo-node-tutorial",
-  "version": "1.0.0",
+  "name": "@ltonetwork/vc-vault",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {

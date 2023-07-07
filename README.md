@@ -1,11 +1,6 @@
-## Veramo Node Tutorial
+![LTO github readme](https://user-images.githubusercontent.com/100821/196711741-96cd4ba5-932a-4e95-b420-42d4d61c21fd.png)
 
-Example repo for Veramo Node Tutorial: [https://veramo.io/docs/node_tutorials/node_setup_identifiers](https://veramo.io/docs/node_tutorials/node_setup_identifiers)
+# VC Vault
 
-## Usage
+Issue and manage verifiable credentials.
 
-    yarn
-    yarn ts-node --esm ./src/list-identifiers.ts
-    yarn ts-node --esm ./src/create-identifier.ts
-    yarn ts-node --esm ./src/create-credential.ts
-    yarn ts-node --esm ./src/verify-credential.ts
