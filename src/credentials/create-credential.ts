@@ -1,4 +1,4 @@
-import { agent } from './veramo/setup.js';
+import { agent } from '../setup.js';
 
 async function main() {
   const identifier = await agent.didManagerGetByAlias({ alias: 'default' });
@@ -16,6 +16,8 @@ async function main() {
   });
   console.log(`New credential created`);
   console.log(JSON.stringify(verifiableCredential, null, 2));
+
+  await agent.dataStoreSaveVerifiableCredential( { verifiableCredential} );
 }
 
 main().catch(console.log);

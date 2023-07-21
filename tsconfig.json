@@ -4,9 +4,12 @@
     "strict": true,
     "target": "esnext",
     "module": "esnext",
-    "rootDir": "./",
+    "rootDir": "./src",
+    "outDir": "./dist",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "downlevelIteration": true
-  }
+    "downlevelIteration": true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "package.json"]
 }

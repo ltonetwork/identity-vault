@@ -20,7 +20,16 @@ import { CredentialPlugin } from '@veramo/credential-w3c';
 import { DIDResolverPlugin, getUniversalResolver } from '@veramo/did-resolver';
 
 // Storage plugin using TypeOrm
-import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations } from '@veramo/data-store';
+import {
+  Entities,
+  KeyStore,
+  DIDStore,
+  IDataStoreORM,
+  PrivateKeyStore,
+  migrations,
+  DataStore,
+  DataStoreORM
+} from '@veramo/data-store';
 
 // TypeORM is installed with `@veramo/data-store`
 import { DataSource } from 'typeorm';
@@ -45,6 +54,8 @@ export const agent = createAgent<
   IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin
 >({
   plugins: [
+    new DataStore(dbConnection),
+    new DataStoreORM(dbConnection),
     new KeyManager({
       store: new KeyStore(dbConnection),
       kms: {

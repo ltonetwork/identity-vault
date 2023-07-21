@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "LTO Identity Vault",
+    "version": "unknown"
+  },
+  "paths": {
+    "/identifiers": {
+      "get": {
+        "summary": "List identifiers",
+        "operationId": "list_identifiers",
+        "tags": ["Identifier"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create identifier",
+        "description": "Create an identifier, optionally with verification methods and services. The response does not contain any private keys or seeds.",
+        "operationId": "create_identifier",
+        "tags": ["Identifier"],
+        "requestBody": {
+          "description": "Options",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "alias": "test",
+                "keyType": "ed25519",
+                "seed": "manage manual recall harvest series desert melt police rose hollow moral pledge kitten position add"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid options"
+          }
+        }
+      }
+    },
+    "/identifiers/{did}": {
+      "get": {
+        "summary": "Get identifier",
+        "description": "Get identifier by DID or alias. The response does not contain any private keys or seeds.",
+        "operationId": "get_identifier",
+        "tags": ["Identifier"],
+        "parameters": [
+          {
+            "name": "did",
+            "description": "DID or alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  }
+}
