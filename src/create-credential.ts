@@ -6,7 +6,7 @@ async function main() {
 
   const verifiableCredential = await agent.createVerifiableCredential({
     credential: {
-      issuer: { id: `${identifier.did}?versionTime=${versionTime}` },
+      issuer: { id: identifier.did },
       credentialSubject: {
         id: 'did:web:example.com',
         you: 'Rock',
