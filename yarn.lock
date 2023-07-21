@@ -458,10 +458,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@ltonetwork/lto@^0.15.8":
-  version "0.15.8"
-  resolved "https://registry.yarnpkg.com/@ltonetwork/lto/-/lto-0.15.8.tgz#dc1a70f96aac3fe24e2c6ead75e5d79a02ffed21"
-  integrity sha512-aGYJOuxn6QfXawuIDA3RndJQxkHEcpum9ufV87YUz0H1PeEasuV7C8zz+jt3dxnSpGYZje5KIadlEYBkWGdXvw==
+"@ltonetwork/lto@^0.15.13":
+  version "0.15.13"
+  resolved "https://registry.yarnpkg.com/@ltonetwork/lto/-/lto-0.15.13.tgz#616525f3094f96676674c030c4546ced1cf0826e"
+  integrity sha512-SSQNLPIv3quzrXa9V2XuYfO8bFUKjM/V150jHvO12fHheq7qvEwcxKv7852LsAOFhD6trBzKBmgEqj9HsvXncQ==
   dependencies:
     "@noble/curves" "^1.0.0"
     "@noble/hashes" "^1.3.0"
@@ -472,6 +472,15 @@
     crypto-js "^4.1.1"
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
+
+"@ltonetwork/veramo-plugin@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@ltonetwork/veramo-plugin/-/veramo-plugin-0.1.3.tgz#1657089fa2e33acefc4591f560f3490532ad8d24"
+  integrity sha512-yIHkimZNIhlgnEQ/f+zPuSwmET+RjM07E3TIvY5ZU6xGzUsb7znXbIyuL3TvMOOxRCTZ0kb2U3eOSHBvkN+lzg==
+  dependencies:
+    "@ltonetwork/lto" "^0.15.13"
+    "@veramo/core" "^4.2.0"
+    "@veramo/did-manager" "^4.2.0"
 
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.10"
@@ -977,6 +986,18 @@
     did-jwt-vc "^3.1.0"
     did-resolver "^4.0.1"
 
+"@veramo/core@^4.2.0", "@veramo/core@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@veramo/core/-/core-4.3.0.tgz#47f2ecf9ce6ae5a77bf7e18e0e0e738967925999"
+  integrity sha512-9M4WfW5GNrb+O3Xndm+9HDoAo2JRgKrNC29+d/QzgA5Aosu1w0cY0IYba6FWXPRwpQkCiRI8An4j7/9Tk11E1Q==
+  dependencies:
+    credential-status "^2.0.5"
+    debug "^4.3.3"
+    did-jwt-vc "^3.1.0"
+    did-resolver "^4.0.1"
+    events "^3.2.0"
+    z-schema "^5.0.2"
+
 "@veramo/core@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@veramo/core/-/core-5.1.2.tgz#eebbe84c10c226fa519d329eaf6dd104713b8744"
@@ -1041,6 +1062,14 @@
     typeorm "^0.3.10"
     uuid "^9.0.0"
 
+"@veramo/did-discovery@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@veramo/did-discovery/-/did-discovery-4.3.0.tgz#16cf61e305f6131514704b5a84de483352370f3d"
+  integrity sha512-K3Oalp8PucNxKx6mk5pJoPpa24mGJxRHsd+Oab+YCroyBhg5rEkZLwDOmPT+WjbxGeKSnXwEQuzxHW3IkwO9rA==
+  dependencies:
+    "@veramo/core" "^4.3.0"
+    debug "^4.3.3"
+
 "@veramo/did-discovery@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@veramo/did-discovery/-/did-discovery-5.1.2.tgz#bbc5a6d1b38d4381e69646f476ac02d2ea8df255"
@@ -1048,6 +1077,14 @@
   dependencies:
     "@veramo/core-types" "^5.1.2"
     debug "^4.3.3"
+
+"@veramo/did-manager@^4.2.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@veramo/did-manager/-/did-manager-4.3.0.tgz#aed966ea9f8d7b31de22d2e83602c3f5e6a58a89"
+  integrity sha512-eb1Gs/KNxNFZCLMsjhUXeBTb+l0tQBqLfnqczk+isnNWcRpljKh2jjvtsgy07i5Xu1iuQG3ErrF8Lad7K99Obg==
+  dependencies:
+    "@veramo/core" "^4.3.0"
+    "@veramo/did-discovery" "^4.3.0"
 
 "@veramo/did-manager@^5.1.2":
   version "5.1.2"
@@ -1498,6 +1535,11 @@ color-support@^1.1.2, color-support@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-support/-/color-support-1.1.3.tgz#93834379a1cc9a0c61f82f52f0d04322251bd5a2"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
+
+commander@^10.0.0:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-10.0.1.tgz#881ee46b4f77d1c1dccc5823433aa39b022cbe06"
+  integrity sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==
 
 commander@^7.2.0:
   version "7.2.0"
@@ -2998,6 +3040,17 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+z-schema@^5.0.2:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-5.0.6.tgz#46d6a687b15e4a4369e18d6cb1c7b8618fc256c5"
+  integrity sha512-+XR1GhnWklYdfr8YaZv/iu+vY+ux7V5DS5zH1DQf6bO5ufrt/5cgNhVO5qyhsjFXvsqQb/f08DWE9b6uPscyAg==
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+    validator "^13.7.0"
+  optionalDependencies:
+    commander "^10.0.0"
 
 z-schema@^5.0.5:
   version "5.0.5"

@@ -2,10 +2,11 @@ import { agent } from './veramo/setup.js';
 
 async function main() {
   const identifier = await agent.didManagerGetByAlias({ alias: 'default' });
+  const versionTime = new Date().toISOString().replace(/\.[0-9]{3}Z$/, 'Z');
 
   const verifiableCredential = await agent.createVerifiableCredential({
     credential: {
-      issuer: { id: identifier.did },
+      issuer: { id: `${identifier.did}?versionTime=${versionTime}` },
       credentialSubject: {
         id: 'did:web:example.com',
         you: 'Rock',

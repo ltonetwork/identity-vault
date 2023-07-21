@@ -5,7 +5,7 @@ import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager, ICredenti
 import { DIDManager } from '@veramo/did-manager';
 
 // LTO DID identity provider
-import { LtoDIDProvider } from './lto-did-provider.js';
+import { LtoDIDProvider } from '@ltonetwork/veramo-plugin';
 
 // Core key manager plugin
 import { KeyManager } from '@veramo/key-manager';
@@ -58,10 +58,10 @@ export const agent = createAgent<
         'did:lto': new LtoDIDProvider({
           defaultKms: 'local',
           networkId: 'T',
+          nodeAddress: 'http://localhost:6869',
           sponsor: {
             seed: 'cruise unaware deputy shiver tunnel rule illegal message tuna dog decorate entire pony skate crouch',
           },
-          nodeAddress: 'https://localhost:6869'
         }),
       },
     }),

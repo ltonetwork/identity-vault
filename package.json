@@ -13,7 +13,8 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@ltonetwork/lto": "^0.15.8",
+    "@ltonetwork/lto": "^0.15.13",
+    "@ltonetwork/veramo-plugin": "^0.1.3",
     "@veramo/core": "^5.1.2",
     "@veramo/credential-w3c": "^5.1.2",
     "@veramo/data-store": "^5.1.2",
