@@ -1,14 +1,16 @@
-import { agent } from '../setup.js';
+import { agent, SEED } from '../setup.js';
 import { CredentialPayload, VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 
-async function issue(
+export async function issue(
   credential: Partial<CredentialPayload>,
   { keyRef, proofFormat }: { keyRef?: string; proofFormat?: 'jwt' | 'lds' } = {},
 ): Promise<{ hash: string; verifiableCredential: VerifiableCredential }> {
   if (!credential.issuer) {
-    const identifier = await agent.didManagerGetByAlias({ alias: 'default' });
-    if (!identifier) throw Error('No default identifier');
+    const identifier = await agent.didManagerGetOrCreate({
+      alias: 'default',
+      options: { seed: SEED }
+    });
 
     credential.issuer = identifier.did;
   }

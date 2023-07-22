@@ -26,6 +26,8 @@ app.get('/credentials', credentials.list);
 app.post('/credentials', credentials.issue);
 app.get('/credentials/:hash', credentials.get);
 
+
+
 // Start the server
 app.listen(3000);
 console.log('Server running at http://localhost:3000/');

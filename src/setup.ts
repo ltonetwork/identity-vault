@@ -33,12 +33,17 @@ import {
 
 // TypeORM is installed with `@veramo/data-store`
 import { DataSource } from 'typeorm';
+import { base58ToBytes } from '@veramo/utils';
 
 // This will be the name for the local sqlite database for demo purposes
 const DATABASE_FILE = 'database.sqlite';
 
 // This will be the secret key for the KMS
 const KMS_SECRET_KEY = '11b574d316903ced6cc3f4787bbcc3047d9c72d1da4d83e36fe714ef785d10c1';
+
+export const SEED = process.env.LTO_WALLET_SEED_BASE58
+  ? new TextDecoder().decode(base58ToBytes(process.env.LTO_WALLET_SEED_BASE58))
+  : process.env.LTO_WALLET_SEED;
 
 const dbConnection = new DataSource({
   type: 'sqlite',
@@ -70,9 +75,7 @@ export const agent = createAgent<
           defaultKms: 'local',
           networkId: 'T',
           nodeAddress: 'http://localhost:6869',
-          sponsor: {
-            seed: 'cruise unaware deputy shiver tunnel rule illegal message tuna dog decorate entire pony skate crouch',
-          },
+          sponsor: SEED ? { seed: SEED } : undefined,
         }),
       },
     }),

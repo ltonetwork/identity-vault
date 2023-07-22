@@ -1,10 +1,7 @@
 import { agent } from '../setup.js';
 import { Request, Response } from 'express';
 
-async function list() {
-  const i = await agent.resolveDid({ didUrl: 'did:lto:3MrxjQnUjTDU5wjjCRwoCyDZPcCm2Ui3t4y' });
-  console.log(i);
-
+export async function list() {
   const identifiers = await agent.didManagerFind();
 
   return identifiers

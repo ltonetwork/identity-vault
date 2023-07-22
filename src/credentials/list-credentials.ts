@@ -2,7 +2,7 @@ import { agent } from '../setup.js';
 import { Request, Response } from 'express';
 import { TCredentialColumns, Where } from '@veramo/core';
 
-async function list(query: { issuer?: string, subject?: string }) {
+export async function list(query: { issuer?: string, subject?: string }) {
   const where: Where<TCredentialColumns>[] = [];
 
   if (query.issuer) where.push({ column: 'issuer', value: [query.issuer] });

@@ -2,7 +2,7 @@ import { agent } from '../setup.js';
 import { Request, Response } from 'express';
 import { VerifiableCredential } from '@veramo/core';
 
-async function get(hash: string): Promise<VerifiableCredential> {
+export async function get(hash: string): Promise<VerifiableCredential> {
   return await agent.dataStoreGetVerifiableCredential({ hash });
 }
 

@@ -3,7 +3,7 @@ import { IIdentifier } from '@veramo/core';
 import { redact } from './redact.js';
 import { Request, Response } from 'express';
 
-async function create(input: { alias?: string, [_: string]: any } = {}): Promise<IIdentifier> {
+export async function create(input: { alias?: string, [_: string]: any } = {}): Promise<IIdentifier> {
   const { alias, ...options } = input;
 
   const identifier = await agent.didManagerCreate({ alias, options });

@@ -529,10 +529,10 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@ltonetwork/veramo-plugin@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@ltonetwork/veramo-plugin/-/veramo-plugin-0.1.3.tgz#1657089fa2e33acefc4591f560f3490532ad8d24"
-  integrity sha512-yIHkimZNIhlgnEQ/f+zPuSwmET+RjM07E3TIvY5ZU6xGzUsb7znXbIyuL3TvMOOxRCTZ0kb2U3eOSHBvkN+lzg==
+"@ltonetwork/veramo-plugin@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@ltonetwork/veramo-plugin/-/veramo-plugin-0.1.4.tgz#afd6b78d5a41d06061ed4fa057729ece29a06655"
+  integrity sha512-19V3V9wNv635CpJCiDzTuZcpn2eshoxuGJXftVw+MbCO8zMRgBpsj2SgKSffTLTanX+WK7uhvdK0W+1qECNuJw==
   dependencies:
     "@ltonetwork/lto" "^0.15.13"
     "@veramo/core" "^4.2.0"
