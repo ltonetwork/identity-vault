@@ -3,7 +3,7 @@ import { IIdentifier } from '@veramo/core';
 import { redact } from './redact.js';
 import { Request, Response } from 'express';
 
-export async function get(id: string): Promise<IIdentifier> {
+async function get(id: string): Promise<IIdentifier> {
   const identifier = id.startsWith('did:')
     ? await agent.didManagerGet({ did: id })
     : await agent.didManagerGetByAlias( { alias: id });

@@ -86,6 +86,107 @@
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/credentials": {
+      "get": {
+        "summary": "List verifiable credentials",
+        "operationId": "list_credentials",
+        "tags": ["Credential"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Issue verifiable credential",
+        "description": "Issue a credential",
+        "operationId": "create_credential",
+        "tags": ["Credential"],
+        "requestBody": {
+          "description": "Credential payload Uses the default identifiers as issuer if not specified.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "@context": [
+                  "https://www.w3.org/2018/credentials/v1",
+                  "https://www.w3.org/2018/credentials/examples/v1"
+                ],
+                "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+                "credentialSubject": {
+                  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                  "degree": {
+                    "type": "BachelorDegree",
+                    "name": "Bachelor of Science and Arts"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload"
+          }
+        }
+      }
+    },
+    "/credentials/{hash}": {
+      "get": {
+        "summary": "Get verifiable credential",
+        "description": "Get credential by hash",
+        "operationId": "get_credential",
+        "tags": ["Credential"],
+        "parameters": [
+          {
+            "name": "hash",
+            "description": "Verifiable credential hash as hex string",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
                     "type": "object"

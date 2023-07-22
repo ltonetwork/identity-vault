@@ -17,7 +17,7 @@ import { KeyManagementSystem, SecretBox } from '@veramo/kms-local';
 import { CredentialPlugin } from '@veramo/credential-w3c';
 
 // Custom resolvers
-import { DIDResolverPlugin, getUniversalResolver } from '@veramo/did-resolver';
+import { DIDResolverPlugin, getUniversalResolverFor } from '@veramo/did-resolver';
 
 // Storage plugin using TypeOrm
 import {
@@ -76,9 +76,7 @@ export const agent = createAgent<
         }),
       },
     }),
-    new DIDResolverPlugin({
-      resolver: getUniversalResolver('https://localhost:8080/identifiers/'),
-    }),
+    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:8080/identifiers/')),
     new CredentialPlugin(),
   ],
 });

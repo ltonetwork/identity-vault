@@ -1,19 +1,27 @@
 import { agent } from '../setup.js';
+import { Request, Response } from 'express';
+import { TCredentialColumns, Where } from '@veramo/core';
 
-async function main() {
-  const credentials = await agent.dataStoreORMGetVerifiableCredentials({
-    where: [ { column: 'issuer', op: 'Like', value: ['did:lto:3MrxjQnUjTDU5wjjCRwoCyDZPcCm2Ui3t4y%'] } ]
-  });
-  //{ where: [ { column: 'issuer', value: ['did:lto:3MrxjQnUjTDU5wjjCRwoCyDZPcCm2Ui3t4y'] } ] }
+async function list(query: { issuer?: string, subject?: string }) {
+  const where: Where<TCredentialColumns>[] = [];
 
-  console.log(`There are ${credentials.length} credentials`);
+  if (query.issuer) where.push({ column: 'issuer', value: [query.issuer] });
+  if (query.subject) where.push({ column: 'subject', value: [query.subject] });
 
-  if (credentials.length > 0) {
-    credentials.map((credential) => {
-      console.log(credential);
-      console.log('..................');
-    });
-  }
+  const list = await agent.dataStoreORMGetVerifiableCredentials({ where });
+
+  return list.map(({ hash, verifiableCredential }) => ({
+    hash,
+    id: verifiableCredential.id,
+    issuer: typeof verifiableCredential.issuer === 'string'
+      ? verifiableCredential.issuer
+      : verifiableCredential.issuer.id,
+    subject: verifiableCredential.credentialSubject.id,
+    type: verifiableCredential.type,
+    issuanceDate: verifiableCredential.issuanceDate,
+  }));
 }
 
-main().catch(console.log);
+export async function route(req: Request, res: Response) {
+  res.json(await list(req.query));
+}
