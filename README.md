@@ -8,7 +8,7 @@ Server side wallet for managing identities and verifiable credentials.
 
 | variable name     | description                                                                                      | format                   | extra information                                                             |
 |-------------------|--------------------------------------------------------------------------------------------------|--------------------------|-------------------------------------------------------------------------------|
-| `LTO_NETWORK`     | Which network to attach the node to                                                              | `MAINNET`, `TESTNET`     | Default is set to `MAINNET`                                                   |
+| `LTO_NETWORK`     | Which network to attach to                                                                       | `MAINNET`, `TESTNET`     | Default is set to `TESTNET`                                                   |
 | `LTO_WALLET_SEED` | The seed of your wallet. Your wallet needs to have sufficient funds to sponsor the transactions. | string                   | Can also be set as `LTO_WALLET_SEED_BASE58`, which will take a `base58` value |
 | `NODE_URL`        | The URL of the public node.                                                                      | string                   |                                                                               |
 

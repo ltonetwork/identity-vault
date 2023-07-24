@@ -73,7 +73,7 @@ export const agent = createAgent<
       providers: {
         'did:lto': new LtoDIDProvider({
           defaultKms: 'local',
-          networkId: process.env.LTO_NETWORK === 'TESTNET' ? 'T' : 'L',
+          networkId: process.env.LTO_NETWORK === 'MAINNET' ? 'L' : 'T',
           nodeAddress: process.env.NODE_URL,
           sponsor: SEED ? { seed: SEED } : undefined,
         }),
