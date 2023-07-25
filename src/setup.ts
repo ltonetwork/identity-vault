@@ -15,6 +15,15 @@ import { KeyManagementSystem, SecretBox } from '@veramo/kms-local';
 
 // W3C Verifiable Credential plugin
 import { CredentialPlugin } from '@veramo/credential-w3c';
+import {
+  CredentialIssuerLD,
+  ICredentialIssuerLD,
+  LdDefaultContexts,
+  VeramoEcdsaSecp256k1RecoverySignature2020,
+  VeramoEd25519Signature2018,
+} from '@veramo/credential-ld';
+
+import { contexts as credential_contexts } from '@transmute/credentials-context'
 
 // Custom resolvers
 import { DIDResolverPlugin, getUniversalResolverFor } from '@veramo/did-resolver';
@@ -56,7 +65,7 @@ const dbConnection = new DataSource({
 }).initialize();
 
 export const agent = createAgent<
-  IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin
+  IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin & ICredentialIssuerLD
 >({
   plugins: [
     new DataStore(dbConnection),
@@ -81,5 +90,12 @@ export const agent = createAgent<
     }),
     new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:8080/identifiers/')),
     new CredentialPlugin(),
+    new CredentialIssuerLD({
+      contextMaps: [
+        LdDefaultContexts,
+        credential_contexts as any,
+      ],
+      suites: [new VeramoEcdsaSecp256k1RecoverySignature2020(), new VeramoEd25519Signature2018()],
+    }),
   ],
 });
