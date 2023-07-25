@@ -15,21 +15,44 @@ import { KeyManagementSystem, SecretBox } from '@veramo/kms-local';
 
 // W3C Verifiable Credential plugin
 import { CredentialPlugin } from '@veramo/credential-w3c';
+import {
+  CredentialIssuerLD,
+  ICredentialIssuerLD,
+  LdDefaultContexts,
+  VeramoEcdsaSecp256k1RecoverySignature2020,
+  VeramoEd25519Signature2020,
+} from '@veramo/credential-ld';
+
+import { contexts as credential_contexts } from '@transmute/credentials-context'
 
 // Custom resolvers
-import { DIDResolverPlugin, getUniversalResolver } from '@veramo/did-resolver';
+import { DIDResolverPlugin, getUniversalResolverFor } from '@veramo/did-resolver';
 
 // Storage plugin using TypeOrm
-import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations } from '@veramo/data-store';
+import {
+  Entities,
+  KeyStore,
+  DIDStore,
+  IDataStoreORM,
+  PrivateKeyStore,
+  migrations,
+  DataStore,
+  DataStoreORM
+} from '@veramo/data-store';
 
 // TypeORM is installed with `@veramo/data-store`
 import { DataSource } from 'typeorm';
+import { base58ToBytes } from '@veramo/utils';
 
 // This will be the name for the local sqlite database for demo purposes
 const DATABASE_FILE = 'database.sqlite';
 
 // This will be the secret key for the KMS
 const KMS_SECRET_KEY = '11b574d316903ced6cc3f4787bbcc3047d9c72d1da4d83e36fe714ef785d10c1';
+
+export const SEED = process.env.LTO_WALLET_SEED_BASE58
+    ? new TextDecoder().decode(base58ToBytes(process.env.LTO_WALLET_SEED_BASE58))
+    : process.env.LTO_WALLET_SEED;
 
 const dbConnection = new DataSource({
   type: 'sqlite',
@@ -42,9 +65,11 @@ const dbConnection = new DataSource({
 }).initialize();
 
 export const agent = createAgent<
-  IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin
+    IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin & ICredentialIssuerLD
 >({
   plugins: [
+    new DataStore(dbConnection),
+    new DataStoreORM(dbConnection),
     new KeyManager({
       store: new KeyStore(dbConnection),
       kms: {
@@ -57,17 +82,20 @@ export const agent = createAgent<
       providers: {
         'did:lto': new LtoDIDProvider({
           defaultKms: 'local',
-          networkId: 'T',
-          nodeAddress: 'http://localhost:6869',
-          sponsor: {
-            seed: 'cruise unaware deputy shiver tunnel rule illegal message tuna dog decorate entire pony skate crouch',
-          },
+          networkId: process.env.LTO_NETWORK === 'MAINNET' ? 'L' : 'T',
+          nodeAddress: process.env.NODE_URL,
+          sponsor: SEED ? { seed: SEED } : undefined,
         }),
       },
     }),
-    new DIDResolverPlugin({
-      resolver: getUniversalResolver('https://localhost:8080/identifiers/'),
-    }),
+    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'https://testnet.lto.network/index/identifiers/')),
     new CredentialPlugin(),
+    new CredentialIssuerLD({
+      contextMaps: [
+        LdDefaultContexts,
+        credential_contexts as any,
+      ],
+      suites: [new VeramoEcdsaSecp256k1RecoverySignature2020(), new VeramoEd25519Signature2020()],
+    }),
   ],
 });

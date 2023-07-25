@@ -12,7 +12,7 @@ async function main() {
         you: 'Rock',
       },
     },
-    proofFormat: 'jwt',
+    proofFormat: 'lds',
   });
   console.log(`New credential created`);
   console.log(JSON.stringify(verifiableCredential, null, 2));
