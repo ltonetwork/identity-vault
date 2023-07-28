@@ -6,6 +6,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\""
   },
+  "type": "module",
   "devDependencies": {
     "@types/debug": "^4.1.8",
     "@types/node": "^20.4.4",
@@ -15,7 +16,7 @@
   },
   "dependencies": {
     "@ltonetwork/lto": "^0.15.13",
-    "@ltonetwork/veramo-plugin": "^0.1.3",
+    "@ltonetwork/veramo-plugin": "../lto-veramo-plugin/",
     "@veramo/core": "^5.1.2",
     "@veramo/credential-w3c": "^5.1.2",
     "@veramo/data-store": "^5.1.2",
@@ -29,6 +30,5 @@
     "ethr-did-resolver": "^7.0.2",
     "sqlite3": "^5.1.2",
     "web-did-resolver": "^2.0.21"
-  },
-  "type": "module"
+  }
 }

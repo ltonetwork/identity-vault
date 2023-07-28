@@ -1,11 +1,19 @@
 // Core interfaces
-import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager, ICredentialPlugin } from '@veramo/core';
+import {
+  createAgent,
+  IDIDManager,
+  IResolver,
+  IDataStore,
+  IKeyManager,
+  ICredentialPlugin,
+  ICredentialStatusManager
+} from '@veramo/core';
 
 // Core identity manager plugin
 import { DIDManager } from '@veramo/did-manager';
 
 // LTO DID identity provider
-import { LtoDIDProvider } from '@ltonetwork/veramo-plugin';
+import {LtoDIDProvider, LtoCredentialPlugin, LtoCredentialStatusVerifier} from '@ltonetwork/veramo-plugin';
 
 // Core key manager plugin
 import { KeyManager } from '@veramo/key-manager';
@@ -15,6 +23,7 @@ import { KeyManagementSystem, SecretBox } from '@veramo/kms-local';
 
 // W3C Verifiable Credential plugin
 import { CredentialPlugin } from '@veramo/credential-w3c';
+
 import {
   CredentialIssuerLD,
   ICredentialIssuerLD,
@@ -65,7 +74,7 @@ const dbConnection = new DataSource({
 }).initialize();
 
 export const agent = createAgent<
-    IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin & ICredentialIssuerLD
+    IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin & ICredentialIssuerLD & ICredentialStatusManager
 >({
   plugins: [
     new DataStore(dbConnection),
@@ -88,8 +97,18 @@ export const agent = createAgent<
         }),
       },
     }),
-    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'https://testnet.lto.network/index/identifiers/')),
+    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:3000/identifiers/')),
     new CredentialPlugin(),
+    new LtoCredentialPlugin(
+      new CredentialPlugin() as any,
+      {
+        networkId: process.env.LTO_NETWORK === 'MAINNET' ? 'L' : 'T',
+        nodeAddress: process.env.NODE_URL,
+        sponsor: SEED ? { seed: SEED } : undefined,
+        addCredentialStatus: true,
+      }
+    ),
+    new LtoCredentialStatusVerifier({ url: 'http://localhost:3000/credential-status/' } ),
     new CredentialIssuerLD({
       contextMaps: [
         LdDefaultContexts,
