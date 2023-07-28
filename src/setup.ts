@@ -5,7 +5,7 @@ import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager, ICredenti
 import { DIDManager } from '@veramo/did-manager';
 
 // LTO DID identity provider
-import { LtoDIDProvider } from '@ltonetwork/veramo-plugin';
+import {LtoCredentialPlugin, LtoCredentialStatusVerifier, LtoDIDProvider} from '@ltonetwork/veramo-plugin';
 
 // Core key manager plugin
 import { KeyManager } from '@veramo/key-manager';
@@ -89,7 +89,16 @@ export const agent = createAgent<
       },
     }),
     new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:8080/identifiers/')),
-    new CredentialPlugin(),
+    new LtoCredentialPlugin(
+      new CredentialPlugin() as any,
+      {
+        networkId: process.env.LTO_NETWORK === 'MAINNET' ? 'L' : 'T',
+        nodeAddress: process.env.NODE_URL,
+        sponsor: SEED ? { seed: SEED } : undefined,
+        addCredentialStatus: true,
+      }
+    ),
+    new LtoCredentialStatusVerifier({ url: 'http://localhost:8080/credential-status/' } ),
     new CredentialIssuerLD({
       contextMaps: [
         LdDefaultContexts,

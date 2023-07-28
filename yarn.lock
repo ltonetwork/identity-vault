@@ -529,14 +529,15 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@ltonetwork/veramo-plugin@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@ltonetwork/veramo-plugin/-/veramo-plugin-0.1.4.tgz#afd6b78d5a41d06061ed4fa057729ece29a06655"
-  integrity sha512-19V3V9wNv635CpJCiDzTuZcpn2eshoxuGJXftVw+MbCO8zMRgBpsj2SgKSffTLTanX+WK7uhvdK0W+1qECNuJw==
+"@ltonetwork/veramo-plugin@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@ltonetwork/veramo-plugin/-/veramo-plugin-0.1.12.tgz#0c8b8c532add7658cdd5685d321688ab4d2beae8"
+  integrity sha512-oCN/i3d2Q8p6wv+Ws1mI1FGx3CJ0O3QBXrvbOLYLYZXIpyFYwJiz7q+5VZWKvnOG5KdtASwP2LTaBnTfw/HyqA==
   dependencies:
     "@ltonetwork/lto" "^0.15.13"
     "@veramo/core" "^4.2.0"
     "@veramo/did-manager" "^4.2.0"
+    cross-fetch "^4.0.0"
 
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.10"
