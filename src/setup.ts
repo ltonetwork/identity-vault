@@ -1,11 +1,19 @@
 // Core interfaces
-import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager, ICredentialPlugin } from '@veramo/core';
+import {
+  createAgent,
+  IDIDManager,
+  IResolver,
+  IDataStore,
+  IKeyManager,
+  ICredentialPlugin,
+  ICredentialStatusManager, ICredentialStatusVerifier
+} from '@veramo/core';
 
 // Core identity manager plugin
 import { DIDManager } from '@veramo/did-manager';
 
 // LTO DID identity provider
-import {LtoCredentialPlugin, LtoCredentialStatusVerifier, LtoDIDProvider} from '@ltonetwork/veramo-plugin';
+import { LtoCredentialPlugin, LtoCredentialStatusVerifier, LtoDIDProvider } from '@ltonetwork/veramo-plugin';
 
 // Core key manager plugin
 import { KeyManager } from '@veramo/key-manager';
@@ -42,6 +50,7 @@ import {
 
 // TypeORM is installed with `@veramo/data-store`
 import { DataSource } from 'typeorm';
+
 import { base58ToBytes } from '@veramo/utils';
 
 // This will be the name for the local sqlite database for demo purposes
@@ -54,6 +63,12 @@ export const SEED = process.env.LTO_WALLET_SEED_BASE58
   ? new TextDecoder().decode(base58ToBytes(process.env.LTO_WALLET_SEED_BASE58))
   : process.env.LTO_WALLET_SEED;
 
+const INDEX_URL = process.env.INDEX_URL ||
+  (
+    process.env.NODE_URL ? process.env.NODE_URL + '/index' :
+    process.env.LTO_NETWORK === 'MAINNET' ? 'https://nodes.lto.network/index' : 'https://testnet.lto.network/index'
+  );
+
 const dbConnection = new DataSource({
   type: 'sqlite',
   database: DATABASE_FILE,
@@ -65,7 +80,15 @@ const dbConnection = new DataSource({
 }).initialize();
 
 export const agent = createAgent<
-  IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialPlugin & ICredentialIssuerLD
+  IDIDManager &
+  IKeyManager &
+  IDataStore &
+  IDataStoreORM &
+  IResolver &
+  ICredentialPlugin &
+  ICredentialIssuerLD &
+  ICredentialStatusManager &
+  ICredentialStatusVerifier
 >({
   plugins: [
     new DataStore(dbConnection),
@@ -88,7 +111,7 @@ export const agent = createAgent<
         }),
       },
     }),
-    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:8080/identifiers/')),
+    new DIDResolverPlugin(getUniversalResolverFor(['lto'], INDEX_URL + '/identifiers/')),
     new LtoCredentialPlugin(
       new CredentialPlugin() as any,
       {
@@ -98,7 +121,7 @@ export const agent = createAgent<
         addCredentialStatus: true,
       }
     ),
-    new LtoCredentialStatusVerifier({ url: 'http://localhost:8080/credential-status/' } ),
+    new LtoCredentialStatusVerifier({ url: INDEX_URL + '/credential-status/' } ),
     new CredentialIssuerLD({
       contextMaps: [
         LdDefaultContexts,

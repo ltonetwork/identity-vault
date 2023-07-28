@@ -187,13 +187,84 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
+                  "type": "object"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/credentials/{hash}/status": {
+      "get": {
+        "summary": "Get verifiable credential status",
+        "operationId": "get_credential_status",
+        "tags": ["Credential"],
+        "parameters": [
+          {
+            "name": "hash",
+            "description": "Verifiable credential hash as hex string",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Update the verifiable credential status",
+        "operationId": "update_credential_status",
+        "tags": ["Credential"],
+        "parameters": [
+          {
+            "name": "hash",
+            "description": "Verifiable credential hash as hex string",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Credential status with optional reason",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "type": "revoke",
+                "reason": "compromised key of subject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Invalid status"
           },
           "404": {
             "description": "Not found"
