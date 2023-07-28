@@ -97,7 +97,7 @@ export const agent = createAgent<
         }),
       },
     }),
-    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:3000/identifiers/')),
+    new DIDResolverPlugin(getUniversalResolverFor(['lto'], 'http://localhost:8080/identifiers/')),
     new CredentialPlugin(),
     new LtoCredentialPlugin(
       new CredentialPlugin() as any,
@@ -108,7 +108,7 @@ export const agent = createAgent<
         addCredentialStatus: true,
       }
     ),
-    new LtoCredentialStatusVerifier({ url: 'http://localhost:3000/credential-status/' } ),
+    new LtoCredentialStatusVerifier({ url: 'http://localhost:8080/credential-status/' } ),
     new CredentialIssuerLD({
       contextMaps: [
         LdDefaultContexts,
