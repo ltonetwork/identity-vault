@@ -6,7 +6,8 @@ import {
   IDataStore,
   IKeyManager,
   ICredentialPlugin,
-  ICredentialStatusManager, ICredentialStatusVerifier
+  ICredentialStatusManager,
+  ICredentialStatusVerifier
 } from '@veramo/core';
 
 // Core identity manager plugin
@@ -49,19 +50,17 @@ import {
 } from '@veramo/data-store';
 
 // TypeORM is installed with `@veramo/data-store`
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-import { base58ToBytes } from '@veramo/utils';
+import { base58ToBytes, bytesToBase58 } from '@veramo/utils';
 
-// This will be the name for the local sqlite database for demo purposes
-const DATABASE_FILE = 'database.sqlite';
-
-// This will be the secret key for the KMS
-const KMS_SECRET_KEY = '11b574d316903ced6cc3f4787bbcc3047d9c72d1da4d83e36fe714ef785d10c1';
+import { sha256 } from '@noble/hashes/sha256';
 
 export const SEED = process.env.LTO_WALLET_SEED_BASE58
   ? new TextDecoder().decode(base58ToBytes(process.env.LTO_WALLET_SEED_BASE58))
   : process.env.LTO_WALLET_SEED;
+
+const KMS_SECRET_KEY = process.env.KMS_SECRET_KEY || (SEED ? bytesToBase58(sha256(SEED)) : 'not_secret');
 
 const INDEX_URL = process.env.INDEX_URL ||
   (
@@ -69,15 +68,29 @@ const INDEX_URL = process.env.INDEX_URL ||
     process.env.LTO_NETWORK === 'MAINNET' ? 'https://nodes.lto.network/index' : 'https://testnet.lto.network/index'
   );
 
+let dbParams;
+
+if (process.env.VAULT_DB_DSN) {
+  const [type, paramString] = process.env.VAULT_DB_DSN.split(':', 2);
+  dbParams = {
+    ...(Object.fromEntries(paramString.split(';').map((p) => p.split('=', 2) as [string, string]))),
+    type,
+  }
+} else {
+  dbParams = {
+    type: 'sqlite',
+    database: 'database.sqlite',
+  };
+}
+
 const dbConnection = new DataSource({
-  type: 'sqlite',
-  database: DATABASE_FILE,
   synchronize: false,
+  ...dbParams,
   migrations,
   migrationsRun: true,
   logging: ['error', 'info', 'warn'],
   entities: Entities,
-}).initialize();
+} as DataSourceOptions).initialize();
 
 export const agent = createAgent<
   IDIDManager &

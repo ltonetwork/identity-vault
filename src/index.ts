@@ -7,6 +7,8 @@ import openapiDocument from './openapi.json' assert { type: 'json' };
 import { routes as identifierRoutes } from './identifiers/index.js';
 import { routes as credentialRoutes } from './credentials/index.js';
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -22,5 +24,5 @@ app.use('/identifiers', identifierRoutes);
 app.use('/credentials', credentialRoutes);
 
 // Start the server
-app.listen(3000);
-console.log('Server running at http://localhost:3000/');
+app.listen(PORT);
+console.log(`Server running at http://localhost:${PORT}/`);
