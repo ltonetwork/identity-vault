@@ -6,5 +6,5 @@ MINOR_VERSION="${DOCKER_TAG%.*}"
 docker tag $IMAGE_NAME $DOCKER_REPO:$MINOR_VERSION
 docker push $DOCKER_REPO:$MINOR_VERSION
 
-docker tag $IMAGE_NAME $DOCKER_REPO:edge
-docker push $DOCKER_REPO:edge
+docker tag $IMAGE_NAME $DOCKER_REPO:latest
+docker push $DOCKER_REPO:latest
