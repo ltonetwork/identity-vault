@@ -1,5 +1,6 @@
 {
-  "name": "@ltonetwork/vc-vault",
+  "name": "@ltonetwork/indentity-vault",
+  "description": "Server-side wallet for managing identities and verifiable credentials",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",

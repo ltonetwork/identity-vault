@@ -2,7 +2,7 @@
 
 # Identity Vault
 
-Server side wallet for managing identities and verifiable credentials.
+Server-side wallet for managing identities and verifiable credentials.
 
 ## Configuration
 
