@@ -21,12 +21,13 @@ RUN yarn --production
 
 # ------
 
-FROM node:18-alpine
+FROM node:18-slim
 
 # Move the build files from build folder to app folder
 WORKDIR /usr/app
-COPY --from=build /usr/src/dist ./
-COPY --from=build /usr/src/node_modules ./node_modules/
+COPY --from=build /usr/src/dist/ ./
+COPY --from=build /usr/src/node_modules ./node_modules
+RUN echo '{ "type": "module" }' > ./package.json
 
 # Expose the API port
 EXPOSE 3000
